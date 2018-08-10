@@ -1,0 +1,18 @@
+<apex:page controller="DemoActionSupport_Controller">
+
+<apex:form >
+
+    <apex:outputPanel id="counter">
+    
+        <apex:outputText value="Click Me: {!count}" />
+        
+        <apex:actionsupport event="onClick" action="{!incrementCounter}" reRender="counter" status="counterStatus" />
+    
+    
+    </apex:outputPanel>
+    
+    <apex:actionstatus id="counterStatus" startText="requesting....." stopText="completed" / >
+
+</apex:form>
+  
+</apex:page>

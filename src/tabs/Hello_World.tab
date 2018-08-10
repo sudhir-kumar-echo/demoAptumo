@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <auraComponent>helloworld</auraComponent>
+    <description>Hello World lightning component tab.</description>
+    <label>Hello World</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom9: Lightning</motif>
+</CustomTab>

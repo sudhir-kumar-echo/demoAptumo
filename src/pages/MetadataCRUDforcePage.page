@@ -1,0 +1,14 @@
+<apex:page controller="MetadataCRUDforceCtrl">
+  <apex:form >
+      <apex:pageblock title="Objects & Profiles">
+          <apex:pageblocksection title="Make Selection">
+              <apex:selectList value="{!selectedObject}" size="1" multiselect="false" title="Select Object">
+                  <apex:selectOptions value="{!sobjectList}" />
+              </apex:selectList>
+              <apex:selectList value="{!selectedProfile}" size="1" multiselect="false" title="Select Profile">
+                  <apex:selectOptions value="{!profileList}" />
+              </apex:selectList>
+          </apex:pageblocksection>
+      </apex:pageblock>
+  </apex:form>
+</apex:page>

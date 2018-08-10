@@ -1,0 +1,19 @@
+<apex:page controller="ApiNameToLabelName_class">  
+  <apex:form >
+      <apex:pageBlock > <!-- title="Convert Object API name To its Label" -->
+          <apex:pageMessages id="pgMsg"/>
+          <apex:pageblocksection columns="1" collapsible="false"> <!-- title="API name To Label" -->
+              <b>Enter API Name </b>
+              <apex:inputText label="" value="{!strObjectAPIName}" style="width: 100%" />
+              <apex:commandButton value="Get Label" action="{!getLabelName}" status="statusBarId" reRender="outputLabel,pgMsg">
+              <apex:actionStatus id="statusBarId">
+                  <apex:facet name="start">
+                      <img src="/img/loading.gif" />
+                  </apex:facet>
+              </apex:actionStatus>
+              </apex:commandButton>
+              <apex:outputtext id="outputLabel" value="{!strObjectLabel}" />
+          </apex:pageblocksection>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

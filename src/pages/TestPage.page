@@ -1,0 +1,18 @@
+<apex:page standardController="Account" sidebar="false">
+<apex:form >
+<script type="text/javascript" src="/js/functions.js"></script>
+<script src="/soap/ajax/11.1/connection.js"></script>
+
+<script type = "text/javascript">
+    window.onload=function()       
+    { 
+             
+         window.open('https://www.google.com','_self');
+    };
+</script>
+
+
+
+
+</apex:form>    
+</apex:page>

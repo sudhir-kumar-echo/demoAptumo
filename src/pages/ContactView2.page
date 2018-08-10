@@ -1,0 +1,50 @@
+<apex:page standardController="Contact" recordSetVar="Contacts">
+    <style>
+        .column{
+            color : Red !important;        
+        }
+    </style>
+    <apex:form >
+       <apex:pageBlock id="contacts_list">
+            Filter: 
+            <apex:selectList value="{! filterId }" size="1" >
+                <apex:selectOptions value="{! listViewOptions }"/>
+                <apex:actionSupport event="onchange" reRender="contacts_list"/>
+            </apex:selectList>
+            <apex:pageBlockTable value="{!Contacts}" var="c">
+                <apex:column styleClass="column"  headerValue="FirstName" value="{!c.firstName}"/>
+                <apex:column headerValue="lastName" value="{!c.lastName}"/>
+                <apex:column headerValue="Owner Name" value="{!c.Owner.Name}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <table style="width: 100%">
+                <tr>
+                    <td>
+                        <!-- Page X of Y --> 
+                        Page: <apex:outputText value=" {!PageNumber} of {! CEILING(ResultSize / PageSize) }"/> 
+                    </td>            
+                    <td align="center">
+                        <!-- Previous page -->
+                        <apex:commandLink action="{! Previous }" value="« Previous"
+                             rendered="{! HasPrevious }"/>   <!-- active -->
+                        <apex:outputText style="color: #ccc;" value="« Previous"
+                             rendered="{! NOT(HasPrevious) }"/>  <!-- inactive (no earlier pages) -->
+                        <!-- Next page -->
+                        <apex:commandLink action="{! Next }" value="Next »"
+                             rendered="{! HasNext }"/> <!-- active -->
+                        <apex:outputText style="color: #ccc;" value="Next »"
+                             rendered="{! NOT(HasNext) }"/>   <!-- inactive (no more pages) -->  
+                    </td>
+                    <td align="right">
+                        <!-- Records per page -->
+                        Records per page:
+                        <apex:selectList value="{! PageSize }" size="1">
+                            <apex:selectOption itemValue="5" itemLabel="5"/>
+                            <apex:selectOption itemValue="20" itemLabel="20"/>
+                            <apex:actionSupport event="onchange" reRender="contacts_list"/>
+                        </apex:selectList>
+                    </td>
+                </tr>
+            </table>
+    </apex:form>
+</apex:page>

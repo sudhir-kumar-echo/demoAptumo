@@ -1,0 +1,75 @@
+<!--
+Name    : ObjectFieldMetadata page
+Date    : August 8, 2017
+Usage   : This page intends to get the field name, field label, type and length of the fields in an object. 
+          It provides an option to export the information into a PDF, Excel or MS-Doc.
+          - To Do: for MS-Doc later
+
+History :
+
+    Created - Sudhir Kumar 
+    Purpose - Get the field name, field label, type and length of the fields in an object. 
+
+-->
+
+<apex:page controller="ObjectFieldMetadataController">
+  <apex:form >
+      <apex:pageblock >
+          <apex:pageblocksection columns="2">
+              <apex:pageblockSectionItem Id="pbs1">
+                  <apex:outputPanel Id="first">
+                      <b> <apex:outputlabel value="Enter Object Name" style="font-size:bold" /> &nbsp; </b>
+                      <apex:inputText title="Object Name" value="{!objectName}"/>  &nbsp;
+                      <apex:commandButton value="Fetch" action="{!getFieldsMetaDataInfo}" reRender="fieldMetadataPanel,recordsFound,second" status="statusBar"/>
+                      <apex:actionStatus Id="statusBar">
+                          <apex:facet name="start">
+                              <img src="/img/loading.gif" />
+                          </apex:facet>
+                      </apex:actionStatus>
+                  </apex:outputPanel>
+              </apex:pageblockSectionItem>
+              <apex:pageblockSectionItem Id="pbs2">
+                  <apex:outputPanel Id="second">
+                      <apex:outputPanel rendered="{!listFieldsMetadataWrapper.size != 0}">
+                          <b> <apex:outputlabel value="Export: " style="font-size:bold" /> &nbsp; </b>
+                          <apex:selectList size="1" value="{!exportOption}">
+                              <apex:selectoption itemValue="pdf" itemLabel="PDF" />
+                              <apex:selectoption itemValue="excel" itemLabel="EXCEL" />
+                              <apex:selectoption itemValue="msDoc" itemLabel="MS-DOC" />
+                          </apex:selectList> &nbsp;
+                          <apex:commandlink action="{!openPdf}" target="_blank">
+                              <apex:commandButton value="Export"  status="statusBar2" reRender=""/>
+                          </apex:commandlink>
+                          <apex:actionStatus Id="statusBar2">
+                              <apex:facet name="start">
+                                  <img src="/img/loading.gif" />
+                              </apex:facet>
+                          </apex:actionStatus>
+                      </apex:outputPanel>
+                  </apex:outputPanel>
+                  <apex:outputpanel >
+                  </apex:outputpanel>
+              </apex:pageblockSectionItem>
+          </apex:pageblocksection>
+      </apex:pageblock>
+      <apex:pageblock >
+          <apex:pageblocksection columns="1">
+              <apex:outputpanel id="fieldMetadataPanel" >
+                  <apex:pageBlockSection columns="1">
+                  <apex:pageblockTable value="{!listFieldsMetadataWrapper}" var="field" rendered="{!listFieldsMetadataWrapper.size != 0}">
+                      <apex:column headerValue="Field Label" value="{!field.fd.Label}" colspan="4"/>
+                      <apex:column headerValue="Field API" value="{!field.fd.QualifiedApiName}" />
+                      <apex:column headerValue="Field Data Type" value="{!field.fd.DataType}" />
+                      <apex:column headerValue="Field Length" value="{!field.fd.Length}"/>
+                  </apex:pageblockTable>
+                  </apex:pageBlockSection>
+              </apex:outputpanel>
+          </apex:pageblocksection>
+          <apex:outputpanel id="recordsFound">
+              <apex:pageblocksection columns="1" rendered="{!exportOption != null && showSection}">
+                  <apex:outputText value="Invalid Object API name. Please verify the API name or check if object exists in the org." />
+              </apex:pageblocksection>
+          </apex:outputpanel>
+      </apex:pageblock>
+  </apex:form>
+</apex:page>

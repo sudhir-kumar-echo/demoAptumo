@@ -1,0 +1,47 @@
+<apex:page controller="RemoteJavascript_Account">
+
+    <script type = "text/javascript">
+        
+        function getRemoteAccount() {
+        
+            var accountName = document.getElementById('acctSearch').value;
+            alert(accountName);
+            
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.RemoteJavascript_Account.getAccount}',
+                accountName,
+                function(result, event){
+                    if(event.status){
+                        // Get DOM IDs for HTML and Visualforce elements 
+                        document.getElementById('remoteAcctId').innerHTML = result.Id;
+                        document.getElementById("{!$Component.block.blockSection.secondItem.acctNumEmployees}").innerHTML = result.NumberOfEmployees;
+                    }else if(event.type == 'Exception'){
+                        document.getElementById("responseErrors").innerHTML = event.message + "<br/> \n<pre>" + event.where + "</pre>"; 
+                    } else{
+                        document.getElementById("responseErrors").innerHTML = event.message;
+                    }
+                },
+                {escape:true}
+            );           
+        }
+        
+    </script>
+    
+    <input id = "acctSearch" type = "text" />
+    <button onclick = "getRemoteAccount()" > Get Account </button>
+    <div id = "responseErrors"></div>
+    
+    <apex:pageblock id="block">
+    
+        <apex:pageblocksection id="blockSection" columns="2">
+            <apex:pageblockSectionItem id="firstItem">
+                <span id = "remoteAcctId" />
+            </apex:pageblockSectionItem>
+            <apex:pageBlockSectionItem id="secondItem">
+                <apex:outputtext id="acctNumEmployees" />
+            </apex:pageBlockSectionItem>
+        </apex:pageblocksection>
+    
+    </apex:pageblock>
+  
+</apex:page>

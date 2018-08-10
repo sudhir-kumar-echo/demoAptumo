@@ -1,0 +1,10 @@
+<apex:page standardController="Opportunity">
+
+    <apex:form >
+        <apex:pageblock >       
+        
+        <apex:outputField value="{!Opportunity.Stage_Progress_Bar__c}" label="{!Opportunity.StageName}" title="{!Opportunity.StageName}" />
+        </apex:pageblock>
+    </apex:form>
+ 
+</apex:page>

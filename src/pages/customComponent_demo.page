@@ -1,0 +1,5 @@
+<apex:page >
+
+    <c:myComponent myValue="My component's value tested" borderColor="Green" />
+
+</apex:page>

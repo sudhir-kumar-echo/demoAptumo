@@ -1,0 +1,5 @@
+<apex:page controller="DynamicPageBlockTable_Controller">
+	<apex:pageBlock >
+        <apex:dynamicComponent componentValue="{!MyPageBlockTable}"/>
+    </apex:pageBlock>
+</apex:page>

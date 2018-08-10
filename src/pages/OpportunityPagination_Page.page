@@ -1,0 +1,50 @@
+<apex:page controller="OpportunityPaginationController">
+
+  <script type = "text/javascript">
+      // function to handle checkbox selection
+      function doCheckboxChange(cb, itemId){
+          if(cb.checked == true){
+              doSelectedOppty(itemId);
+          }
+          else{
+              doDeSelectedOppty(itemId);
+          }
+      }
+  </script>
+  
+  <apex:form >
+  
+      <!-- Handle Selected Opportunities -->
+      <apex:actionFunction name="doSelectedOppty" action="{!handleSelectedOpportunity}" reRender="pageBlockMain" >
+          <apex:param name="contextOpportunity" value="" assignTo="{!contextOpportunity}" />
+      </apex:actionFunction>
+      
+      <!-- Handle De-Selected Opportunities -->
+      <apex:actionFunction name="doDeSelectedOppty" action="{!handleDeselectedOpportunity}" reRender="pageBlockMain">
+          <apex:param name="contextOpportunity" value="" assignTo="{!contextOpportunity}" />
+      </apex:actionFunction>
+      
+      <!-- table of data -->
+      <apex:pageblock title="Opportunity Pagination" id="pageBlockMain" >
+          <apex:pageblockTable value="{!Opportunities}" var="o" >
+              <apex:column >
+                  <apex:facet name="header">Action</apex:facet>
+                  <apex:inputcheckbox value="{!o.IsSelected}" onchange="doCheckboxChange(this, '{!o.oOpportunity.Id}')" />                               
+              </apex:column>
+              <apex:column value="{!o.oOpportunity.Name}"/>
+              <apex:column value="{!o.oOpportunity.StageName}"/>
+          </apex:pageblockTable>      
+      </apex:pageblock>
+      <!-- count of selected items -->
+      <apex:outputLabel value="[{!selectedCount} records selected]" />
+      <br/>
+      <!-- next, previous and page info -->
+      <apex:commandLink action="{!goPrevious}" rendered="{!hasPrevious}" value="Previous" />
+          <!--apex:outputlabel rendered="{!NOT(hasPrevious)}" value="Previous"/-->
+          <apex:outputlabel value=" (page {!pageNumber} of {!totalPages})" />
+      <apex:commandlink action="{!goNext}" rendered="{!hasNext}" value="Next" />
+          <apex:outputLabel rendered="{!NOT(hasNext)}" value="Next" />
+      
+  </apex:form>
+  
+</apex:page>

@@ -1,0 +1,26 @@
+<!--
+Name    : ObjectFieldMetadata page
+Date    : August 8, 2017
+Usage   : This page intends to get the field name, field label, type and length of the fields in an object. 
+          It provides an option to export the information into a PDF, Excel or MS-Doc.
+          - To Do: for MS-Doc later
+
+History :
+
+    Created - Sudhir Kumar 
+    Purpose - Get the field name, field label, type and length of the fields in an object. 
+
+-->
+
+<apex:page controller="ObjectFieldMetadataController" sidebar="false" showHeader="false" cache="true" renderAs="pdf">
+    <apex:form >
+        <apex:pageblock >
+            <apex:pageBlockTable value="{!listFieldsMetadataWrapper}" var="field" rendered="{!listFieldsMetadataWrapper.size != 0}">
+              <apex:column headerValue="Field Label" value="{!field.fd.Label}"/>
+              <apex:column headerValue="Field API" value="{!field.fd.QualifiedApiName}"/>
+              <apex:column headerValue="Field Data Type" value="{!field.fd.DataType}"/>
+              <apex:column headerValue="Field Length" value="{!field.fd.Length}"/>
+            </apex:pageBlockTable>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

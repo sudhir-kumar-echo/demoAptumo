@@ -1,0 +1,31 @@
+<apex:component controller="SLDS_ProgressBarComponentController" access="global" >
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"></link>
+    <apex:attribute access="global" name="Maindata" description="This will contain the data needed for the component in comma seperated format. Object,FieldName,RecordId" type="String" assignTo="{!data}" required="true"/>
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">  
+
+    <div class="slds progressBarComponent">      
+      <div class="slds-grid" >
+        <div class="slds-tabs--path" role="application">
+            <ul class="slds-tabs--path__nav" role="tablist">
+                 <!--The stages will be dynamically inserted here from the javasscript-->
+            </ul>
+        </div>
+    </div>
+    </div>
+    <!--This form will be available in the UI for the javascript to pick up the values and insert them in the chevron
+    -->
+    <apex:form style="display:none;">
+        <apex:inputField styleClass="progressPicklistVal" value="{!genericObject[fieldName]}"/>
+    </apex:form>
+    <script type="text/javascript">
+        /*A global variable which will hold all the salesforce specific variable / functions like 'URLFOR' as these are not directly accessible in the javascript files*/
+        var __globalVar = {
+            checkImage : "{!URLFOR($Resource.SLDS, 'assets/icons/utility/check_60.png')}"
+        }
+    </script>
+    <!--Javascript files-->
+    <script type="text/javascript" src="{!URLFOR($Resource.progressBar, 'progressBar/js/jquery-2.2.1.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.progressBar, 'progressBar/js/main.js')}"></script>
+    </html>
+</apex:component>

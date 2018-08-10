@@ -1,0 +1,4 @@
+<apex:page sidebar="false" docType="html-5.0">
+  <h1> Welcome to Knowledge Base! </h1> <br/> <br/>
+  <h6> A Learning App to the journey of transforming oneself into Salesforce Solution Architect </h6>
+</apex:page>

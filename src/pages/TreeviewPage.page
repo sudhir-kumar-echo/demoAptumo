@@ -1,0 +1,67 @@
+<apex:page Controller="Treeview">
+    <apex:form >
+        <apex:pageBlock title="Account Treeview">
+        
+<!-- Include the Jquery Script files -->
+    <link rel="stylesheet" href="{!URLFOR($Resource.JqueryTreeView,'Jquerytreeview/jquery.treeview.css')}"/>
+    <script src="{!URLFOR($Resource.JqueryTreeView,'Jquerytreeview/jquery.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.JqueryTreeView,'Jquerytreeview/jquery.cookie.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.JqueryTreeView,'Jquerytreeview/jquery.treeview.js')}" type="text/javascript"></script>
+<!-- End of Javascript files -->
+<script type="text/javascript">
+        $(function() {
+            $("#tree").treeview({
+                collapsed: true,
+                animated: "medium",
+                control:"#sidetreecontrol",
+                persist: "location"
+            });
+        })
+</script>
+<br/>
+<!-- Tree -->
+<div class="treeheader" >&nbsp;</div>
+<div id="sidetreecontrol"><a href="?#"><font >Expand All</font></a></div>
+<br/>
+<ul id="tree">
+    <apex:repeat value="{!methoddemo}" var="MainMethodVar">
+        <li>
+            <table >
+                <tr >                    
+                    <td >
+                       <strong><apex:outputlink >{!MainMethodVar.Accountrecords.Name}</apex:outputlink></strong>                    
+                    </td>
+                    <td >
+                         <strong><apex:outputtext /></strong>
+                    </td>
+                    <td >
+                         <strong><apex:outputtext /></strong>
+                    </td>
+                </tr>
+              </table>      
+             <ul>
+                 <apex:repeat value="{!MainMethodVar.contactsrecords}" var="child">
+                    <li>
+                    <table >
+                    <tr >
+                    
+                    <td >
+                       <span class="formattextcon"><apex:outputtext /></span>                    
+                    </td>
+                    <td >
+                         <span class="formattextcon"><apex:outputtext /></span>
+                    </td>
+                    <td >
+                         <strong><apex:outputtext /></strong>
+                    </td>
+                </tr>
+              </table>           
+                </li>
+                 </apex:repeat>  
+             </ul>  
+        </li>
+    </apex:repeat>
+</ul>
+    </apex:pageBlock>
+    </apex:form>  
+</apex:page>

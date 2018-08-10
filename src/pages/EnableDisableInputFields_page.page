@@ -1,0 +1,45 @@
+<apex:page sidebar="false" standardController="Account">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1">
+                <apex:inputField value="{!Account.Name}"/>
+                <apex:inputField value="{!Account.Type}" id="type"/>
+                <apex:inputField value="{!Account.Phone}" id="Phone"/>
+                <apex:inputField value="{!Account.AccountNumber}" id="actNumber"/>
+                <apex:inputField value="{!Account.Industry}" id="industry"/>
+                <apex:inputField value="{!Account.AnnualRevenue}" id="anualReven"/>
+                <apex:inputField value="{!Account.SLAExpirationDate__c}" id="slaexpdate"/>
+            </apex:pageBlockSection>   
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save" action="{!save}"/>
+            </apex:pageBlockButtons>   
+        </apex:pageBlock>   
+    </apex:form> 
+    <script>
+        $(document).ready(function(){
+            $("[id$=type]").change(function(){
+                if(this.value=="Other"){
+                        $("[id$=Phone]").val("");
+                        $("[id$=actNumber]").val("");
+                        $("[id$=industry]").val("");
+                        $("[id$=anualReven]").val("");
+                        $("[id$=slaexpdate]").val("");
+                        $("input[id$=Phone]").prop("disabled",true);                       
+                       $("[id$=Phone]").prop("disabled",true);
+                        $("[id$=actNumber]").prop("disabled",true);
+                        $("[id$=industry]").prop("disabled",true);
+                        $("[id$=anualReven]").prop("disabled",true);
+                        $("[id$=slaexpdate]").prop("disabled",true);
+                }
+                else{
+                      $("[id$=Phone]").prop("disabled",false);
+                        $("[id$=actNumber]").prop("disabled",false);
+                        $("[id$=industry]").prop("disabled",false);
+                        $("[id$=anualReven]").prop("disabled",false);
+                        $("[id$=slaexpdate]").prop("disabled",false);
+                }               
+            });
+        });
+    </script>
+</apex:page>

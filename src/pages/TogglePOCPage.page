@@ -1,0 +1,18 @@
+<apex:page controller="togglePOC" >
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons id="butts" location="top">
+                <apex:commandButton id="butt" value="{!toggleLabel}" rerender="hiddenLabel,butt,topSection" />
+                <apex:inputHidden id="hiddenLabel" value="{!toggleLabel}" />
+            </apex:pageBlockButtons>
+            <apex:outputPanel id="topSection" >
+                <apex:pageBlockSection title="Detail" rendered="{!toggleLabel=='Summary'}" >
+                    <apex:outputLabel value="This is the detail section." />
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Summary" rendered="{!toggleLabel=='Detail'}" >
+                    <apex:outputLabel value="This is the summary section." />
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

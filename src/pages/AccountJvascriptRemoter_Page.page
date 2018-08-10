@@ -1,0 +1,47 @@
+<apex:page controller="AccountJavascriptRemoter">
+    
+    <script type="text/javascript">
+        
+        function getRemoteAccount() {
+            var sAccountName = document.getElementById('searchKey').value ;
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.AccountJavascriptRemoter.getAccount}',
+                sAccountName,
+                function(result, event){
+                    console.log('result:: ' + result) ;
+                    console.log('result.Id:: ' + result.Id) ;
+                    console.log('result.NoOfEmployees:: ' + result.NumberOfEmployees) ;
+                    console.log('event:: ' + event) ;
+                    if(event.status) {
+                        document.getElementById('remoteAcctId').innerHTML = result.Name ;
+                        document.getElementById(
+                        '{!$Component.block.blockSection.secondItem.acctNumEmployees}'
+                        ).innerHTML = result.NumberOfEmployees ;
+                    } else if(event.type === 'exception') {
+                        document.getElementById('responseErrors').innerHTML = event.message + "<br/> \n <pre>" + event.where + "</pre>" ;
+                    } else {
+                        document.getElementById('responseErrors').innerHtml = event.message ;
+                    }
+                },
+                {escape: true, buffer: false, timeout: 30000}
+            ) ;
+        }
+    
+    </script>
+    
+    <input id="searchKey" type="text" />
+    <button onclick="getRemoteAccount() ;"> Get Account </button>
+    <div id="responseErrors"> </div>
+    
+    <apex:pageblock id="block">
+        <apex:pageblocksection id="blockSection">
+            <apex:pageblocksectionItem id="firstItem">
+                <span id="remoteAcctId" />
+            </apex:pageblocksectionItem>
+            <apex:pageblockSectionItem id="secondItem">
+                <apex:outputText id="acctNumEmployees" />
+            </apex:pageblockSectionItem>
+        </apex:pageblocksection>
+    </apex:pageblock>
+    
+</apex:page>

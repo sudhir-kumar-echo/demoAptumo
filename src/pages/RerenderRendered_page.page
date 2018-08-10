@@ -1,0 +1,16 @@
+<apex:page standardController="Vehicle__c" >
+  <apex:form >
+      <apex:pageBlock >
+              <apex:pageblocksection > 
+                  <apex:inputField value="{!Vehicle__c.Checkbox__c}">
+                      <apex:actionsupport event="onchange" reRender="textId"/>
+                  </apex:inputField>
+              </apex:pageblocksection>
+              <apex:outputpanel id="textId">
+                  <apex:pageblocksection rendered="{!Vehicle__c.Checkbox__c}">
+                      <apex:inputField value="{!Vehicle__c.Text_field__c}" />
+                  </apex:pageblocksection>
+              </apex:outputpanel>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

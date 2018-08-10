@@ -1,0 +1,14 @@
+<apex:page >  
+    <apex:form id="fId">
+        <apex:pageBlock title="Test" id="pbId">
+            <apex:pageBlockSection title="Section" id="Sec1">
+                <script>                   twistSection(document.getElementById('img_{!$Component.Sec1}')); 
+                </script>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel title="Testing in progress" value="Testing" />
+                    <apex:commandButton action="{!save}" value="Click" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

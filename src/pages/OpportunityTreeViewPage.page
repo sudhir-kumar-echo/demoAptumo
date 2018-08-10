@@ -1,0 +1,119 @@
+<apex:page controller="OpportunityTreeViewController" action="{!fetchOpportunites}" id="pg">
+    <style>
+        .sign-class{
+            font-size: 12px;
+            font-weight: 700;
+            padding: 0px 5px;
+            margin-right: 10px;
+            border: 1px solid black;
+            background: black;
+            color: whitesmoke;
+            margin-bottom:10px;
+            cursor:pointer;
+        }
+        .pbBody table.list tr.dataRow td {
+            font-family: verdana;
+            font-weight: normal;
+        }
+    </style>
+     
+    <apex:form id="frm">
+        <apex:pageBlock id="pb1" title="Opportunities by Close Date -">
+            <apex:variable value="{!0}" var="dateIndex"/>
+            <apex:pageBlockTable value="{!mapOpportunities}" var="dateKey" id="dateTable">
+                <apex:column style="color: #000;font-size: 11px;font-family:verdana;font-weight: bold;">
+                    <apex:facet name="header">
+                        <span style="color: #000;font-size: 11px;font-family:verdana;font-weight: bold;">
+                            Close Date
+                        </span>    
+                    </apex:facet>
+                    <span id="date-sign-{!dateIndex}" class="sign-class" onclick="toggleDateTable('{!dateIndex}');">+</span>
+                    <span style="color: #000;font-size: 11px;font-family:verdana;font-weight: bold;">
+                        Close Date - {!dateKey}
+                    </span>
+                    <apex:variable value="{!0}" var="stageIndex"/>
+                    <apex:pageBlockTable value="{!mapOpportunities[dateKey]}" var="stageKey" id="stageTable" style="display:none;margin-top:10px;margin-left:20px;width:98%;">
+                        <apex:column style="color: #000;font-size: 11px;font-family:verdana;font-weight: bold;">
+                            <apex:facet name="header">
+                                <span style="color: #000;font-size: 11px;font-family:verdana;font-weight: bold;">
+                                    Stage Name
+                                </span>    
+                            </apex:facet>
+                            <span id="stage-sign-{!dateIndex}-{!stageIndex}" class="sign-class" onclick="toggleStagesTable('{!dateIndex}','{!stageIndex}');">+</span>
+                            <span style="color: #000;font-size: 11px;font-family:verdana;font-weight: bold;">
+                                {!stageKey}
+                            </span>
+                            <apex:variable value="{!0}" var="recordIndex"/>
+                            <apex:pageBlockTable value="{!mapOpportunities[dateKey][stageKey]}" var="oppRecord" id="opportunityTable" style="margin-top:10px;margin-left:20px;width:98%;display:none;">
+                                <apex:column headerValue="Action" style="width: 85px;">
+                                    <apex:outputLink value="javascript:void(0);" target="_Blank">View</apex:outputLink>&nbsp;|&nbsp;
+                                    <apex:outputLink value="javascript:void(0);" target="_Blank">Delete</apex:outputLink>
+                                </apex:column>
+                                <apex:column headerValue="Name" value="{!oppRecord.Name}"/>
+                                <apex:column headerValue="Type" value="{!oppRecord.Type}" style="width: 200px;"/>
+                                <apex:column headerValue="Account" value="{!oppRecord.Account.Name}" style="width: 250px;"/>
+                                <apex:column headerValue="Amount" style="width: 100px;">
+                                    <apex:outputText value="$ {0, number,###,###,###}">
+                                        <apex:param value="{!oppRecord.Amount}"/>
+                                    </apex:outputText>
+                                </apex:column>
+                                <apex:column headerValue="Close Date" value="{!oppRecord.CloseDate}" style="width: 75px;"/>
+                                <apex:column headerValue="Created Date" style="width:80px">
+                                    <apex:outputText value="{0, date,MM/dd/yyyy}">
+                                        <apex:param value="{!oppRecord.CreatedDate}"/>
+                                    </apex:outputText>
+                                    <apex:variable value="{!recordIndex+1}" var="recordIndex"/>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            <apex:variable value="{!stageIndex+1}" var="stageIndex"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    <apex:variable value="{!dateIndex+1}" var="dateIndex"/>
+                </apex:column>    
+            </apex:pageBlockTable>    
+        </apex:pageBlock>    
+    </apex:form>
+     
+    <!-- Script Part -->
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"/>
+    <script>
+        $(document).ready(function(){
+            $(esc('pg:frm:pb1:dateTable:tb')+" > tr").attr("onmouseover","");
+            $("[id$='stageTable:tb'] > tr").attr("onmouseover","");
+            $(esc('pg:frm:pb1:dateTable:tb')+" > tr > td").hover(function(){$(this).css("background-color","ghostwhite");}, function(){$(this).css("background-color","white");});
+            $("[id$='stageTable:tb'] > tr > td").hover(function(){$(this).css("background-color","greenyellow");}, function(){$(this).css("background-color","white");});
+            $("[id$='stageTable'] > thead .headerRow").css("background-color","deepskyblue");
+        });
+         
+        function toggleDateTable(index){
+            var signtext = $("#date-sign-"+index).text();
+            var tableId = 'pg:frm:pb1:dateTable:'+index+':stageTable';
+            if(signtext == '+'){
+                $("#date-sign-"+index).text('-').css("padding", " 0px 7px");
+                $(esc(tableId)).show();
+            }
+            else{
+                $("#date-sign-"+index).text('+').css("padding", " 0px 5px");
+                $(esc(tableId)).hide();
+            }
+        }
+         
+        function toggleStagesTable(rootindex, childindex){
+            var signtext = $("#stage-sign-"+rootindex+"-"+childindex).text(); //address-sign-index-addIndex
+            var tableId = 'pg:frm:pb1:dateTable:'+rootindex+':stageTable:'+childindex+':opportunityTable';
+            if(signtext == '+'){
+                $("#stage-sign-"+rootindex+"-"+childindex).text('-').css("padding", " 0px 7px");
+                $(esc(tableId)).show();
+            }
+            else{
+                $("#stage-sign-"+rootindex+"-"+childindex).text('+').css("padding", " 0px 5px");
+                $(esc(tableId)).hide();
+            }
+        }
+         
+        function esc(myid) {
+            return '#' + myid.replace(/(:|\.)/g,'\\\$1');
+        } 
+         
+    </script>        
+</apex:page>

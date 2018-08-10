@@ -1,0 +1,119 @@
+<apex:page standardController="Opportunity" extensions="ProgressBarVisualforce_cls"  standardStylesheets="true" sidebar="false" docType="html-5.0">
+
+  <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">  
+  
+  <head>
+      <apex:stylesheet value="{!URLFOR($Resource.SLDS, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+      
+  </head>
+   
+  <body>
+  <!-- SLDS -->
+  <apex:form id="frm">
+    
+  <div class="slds">      
+  <div class="slds-grid" >
+  <div class="slds-tabs--path" role="application">
+    <ul class="slds-tabs--path__nav" role="tablist" id="progUL" style="display:none;">
+    
+      <!-- Completed Stage -->
+      <apex:repeat value="{!listCompletedStages}" var="completeStage">
+
+      <li class="slds-tabs--path__item slds-is-complete" role="presentation">
+      
+      
+        <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="#void" aria-live="assertive">
+          
+          <span class="slds-tabs--path__stage">
+            <!--<svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+            </svg>-->
+            <span class="slds-assistive-text">Stage Complete</span>
+          </span>
+         
+              <span class="slds-tabs--path__title">{!completeStage}</span>
+          
+        </a>
+        
+      </li>
+
+      </apex:repeat>
+      <!-- Current Stage -->
+      
+      <li class="slds-tabs--path__item slds-is-current" role="presentation">
+        <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="#void" aria-live="assertive">
+          <span class="slds-tabs--path__stage">
+            <!--<svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+            </svg>-->
+          </span>
+          <span class="slds-tabs--path__title">{!sCurrentStageValue}</span>
+        </a>
+      </li>
+      
+      <!-- Not Completed Stage -->
+      
+      <apex:repeat value="{!listNotCompletedStages}" var="notCompleteStage">
+      <li class="slds-tabs--path__item slds-is-incomplete" role="presentation">
+      
+        <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="#void" aria-live="assertive">
+          
+          <span class="slds-tabs--path__stage">
+            <!--<svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+            </svg>-->
+          </span>
+          
+              <span class="slds-tabs--path__title">{!notCompleteStage}</span>
+         
+        </a>
+        
+      </li>
+      </apex:repeat> 
+
+      
+    </ul>
+  </div>
+</div>
+</div>
+
+
+ <!--  Parsing record type specific values -->
+ 
+ 
+ <apex:outputPanel rendered="{!loadonce}">
+         <apex:actionFunction name="reloadWithStages" action="{!reload}" reRender="frm" status="status" oncomplete="document.getElementById('progUL').style.display = '';"/>
+      
+         <div id="test1" style="width: 100%; height: 150px;"></div> 
+         <apex:outputPanel layout="block" id="vals" style="display:none">
+            <apex:inputField value="{!Opportunity.StageName}" required="false" id="stages"/>
+            <apex:inputText value="{!valsText}" required="false" id="back"/>
+         </apex:outputPanel>
+      <script>
+         function recall()
+         {
+            var ele=document.getElementById('{!$Component.frm.stages}');
+            var idx=0;
+            var valsText='';
+            for (idx=0; idx<ele.length; idx++)
+            {
+               valsText+=ele.options[idx].text + ':';
+               //alert('valsText:: ' + valsText) ;
+            }
+           
+            var backele=document.getElementById('{!$Component.frm.back}');
+            
+            backele.value=valsText; 
+            
+            reloadWithStages();
+         }
+         
+         setTimeout(function(){recall()},50); 
+         //window.onload(function(){recall()}) ;
+      </script>
+   </apex:outputPanel>
+</apex:form>
+
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,45 @@
+<apex:page standardController="Opportunity" extensions="RecordTypePickListController">
+ 
+   <apex:outputPanel rendered="{!loadonce}">
+      <apex:form id="frm">
+         <apex:actionFunction name="reloadWithStages" action="{!reload}"/>
+         <div id="test1" style="width: 100%; height: 150px;"></div> 
+         <apex:outputPanel layout="block" id="vals" style="display:none">
+            <apex:inputField value="{!Opportunity.StageName}" required="false" id="stages"/>
+            <apex:inputText value="{!valsText}" required="false" id="back"/>
+         </apex:outputPanel>
+      </apex:form>
+      <script>
+         function reload()
+         {
+            var ele=document.getElementById('{!$Component.frm.stages}');
+            alert('ele:: ' + ele) ;
+            var idx=0;
+            var valsText='';
+            for (idx=0; idx<ele.length; idx++)
+            {
+               valsText+=ele.options[idx].text + ':';
+               alert('valsText:: ' + valsText) ;
+            }
+    
+            var backele=document.getElementById('{!$Component.frm.back}');
+            
+            backele.value=valsText;
+  
+            reloadWithStages();
+         }
+ 
+         window.onload=reload(); 
+      </script>
+   </apex:outputPanel>
+    
+   <apex:outputPanel rendered="{!NOT(loadonce)}">
+      <apex:pageBlock title="Status Values for record type ">
+         <apex:pageBlockTable value="{!pickListVals}" var="plVal">
+            <apex:column headerValue="Stage">
+               <apex:outputText value="{!plVal}"/>
+            </apex:column>
+         </apex:pageBlockTable>
+   </apex:pageBlock>
+   </apex:outputPanel>
+</apex:page>

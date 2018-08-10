@@ -1,0 +1,12 @@
+<apex:page standardController="Account" extensions="sampleExtension" > 
+
+ <apex:form >
+
+<apex:inputField value="{!account.Name}"/> <p/>
+ <apex:inputField value="{!account.Type}"/> <p/>
+ <!-- apex:inputField value="{!account.Region__c}"/> <p/ -->
+ <apex:commandButton value="Save" action="{!savenow}"/>
+
+</apex:form>
+
+</apex:page>

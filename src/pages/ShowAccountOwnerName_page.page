@@ -1,0 +1,14 @@
+<apex:page standardController="Account" extensions="AccountExtensions">
+  <apex:form > 
+      <apex:pageblock title="Account Owner From Standard Controller">
+          <apex:pageblockSection >
+              <apex:outputfield label="Account Owner" value="{!Account.Owner.Name}"/>
+          </apex:pageblockSection>
+      </apex:pageblock>
+      <apex:pageblock title="Account Owner From Extensions">
+          <apex:pageblockSection >
+              <apex:outputText label="Account Owner" value="{!accountOwner}"/>
+          </apex:pageblockSection>
+      </apex:pageblock>
+  </apex:form>
+</apex:page>
