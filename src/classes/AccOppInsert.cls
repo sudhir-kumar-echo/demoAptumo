@@ -5,13 +5,13 @@ global class AccOppInsert
   {
      webservice String accName;
      webservice String newRold;
-     webservice List<OppInfo> oppInfo;	// Sudhir 
+     webservice List<OppInfo> oppInfo;	// Sudhir commented 
   }
   
   global class OppInfo 
   {
      webservice String oppName; 
-     webservice ID accId; //uncommeted
+     webservice ID accId; //uncommeted comment
      webservice String accName;
   }
   
