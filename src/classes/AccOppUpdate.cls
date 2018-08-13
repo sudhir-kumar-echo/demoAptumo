@@ -4,7 +4,7 @@ global class AccOppUpdate
   {
      webservice String accName;
      webservice String accId;
-     webservice List<OppInfo> oppInfo;
+     webservice List<OppInfo> oppInfo; // comment
   }
   
   global class OppInfo 
